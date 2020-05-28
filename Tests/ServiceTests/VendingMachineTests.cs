@@ -29,9 +29,9 @@ namespace Tests.ServiceTests
 
             initialStock = new Dictionary<Product, int>()
             { 
-            { new Product { Name = "Cola", Price = 1.00m }, 12},
-            { new Product { Name = "Chips", Price = 0.5m }, 15},
-            { new Product { Name = "Candy", Price = 0.65m }, 17},
+            { new Product { Name = "Cola", Price = 1.00m, Position = 1 }, 12},
+            { new Product { Name = "Chips", Price = 0.5m, Position = 2 }, 15},
+            { new Product { Name = "Candy", Price = 0.65m, Position = 3 }, 17},
             };
         }
 
@@ -103,7 +103,7 @@ namespace Tests.ServiceTests
         }
 
         [Test]
-        public void Test_Product_Select()
+        public void Test_Product_Select_No_Money_Value_1()
         {
             MessageService _messageService = new MessageService();
             VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
@@ -115,7 +115,25 @@ namespace Tests.ServiceTests
             Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
             var returnedDisplay = vendingMachineService.CheckDisplay();
 
-            Assert.AreEqual("INSERT COIN", returnedDisplay);
+            Assert.AreEqual("PRICE: 1.00", returnedDisplay);
+        }
+
+        [Test]
+        public void Test_Product_Select_Not_Enough_Money_Product_Value_1()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("PRICE: 1.00", returnedDisplay);
         }
     }
 }

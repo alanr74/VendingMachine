@@ -17,8 +17,9 @@ namespace VendingApp
     {
         private const string defaultMessage = "INSERT COIN";
         private string currentMessage = defaultMessage;
-        public bool ChangeVendingMessage(string Message)
+        public bool ChangeVendingMessage(string message)
         {
+            currentMessage= message;
             return true;
         }
 
@@ -33,7 +34,7 @@ namespace VendingApp
                     break;
             }
 
-            return messageToreturn;
+            return messageToreturn.Trim();
         }
 
         public void ResetVendingMessage()
