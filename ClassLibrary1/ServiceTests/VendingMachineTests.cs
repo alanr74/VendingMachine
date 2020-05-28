@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WebApplication11;
 using WebApplication11.Controllers;
 using WebApplication11.Models;
@@ -53,6 +54,38 @@ namespace ClassLibrary1.ServiceTests
 
 
             Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+        }
+
+        [Test]
+        public void Test_Inserting_Nickle()
+        {
+            Mock<IMessageService> _messageService = new Mock<IMessageService>();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService.Object);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+        }
+
+        [TestCase(5, 21)]
+        [TestCase(2, 18)]
+        [TestCase(6, 24)]
+        public void Test_Insert_And_return_Of_Coins(int first, int second)
+        {
+            Mock<IMessageService> _messageService = new Mock<IMessageService>();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService.Object);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = first, Radius = second }));
+
+            var returnedStack = vendingMachineService.ReturnCoins();
+
+            Assert.AreEqual((new Coin { Weight = first, Radius = second }), returnedStack.FirstOrDefault().Key);
         }
     }
 }
