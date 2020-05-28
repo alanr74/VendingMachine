@@ -81,7 +81,14 @@ namespace VendingApp
             // Not enough Money in
             if (currentCoins.StackValue() < itemPrice)
             {
-                messageService.ChangeVendingMessage($"PRICE: {itemPrice}");
+                if (messageService.CurrentMessage().Contains("PRICE:"))
+                {
+                    messageService.ChangeVendingMessage($"PRICE: {itemPrice - currentCoins.StackValue()}");
+                }
+                else
+                {
+                    messageService.ChangeVendingMessage($"PRICE: {itemPrice}");
+                }
                 return false;
             }
 

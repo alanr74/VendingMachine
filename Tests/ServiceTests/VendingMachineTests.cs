@@ -119,7 +119,7 @@ namespace Tests.ServiceTests
         }
 
         [Test]
-        public void Test_Product_Select_Not_Enough_Money_Product_Value_1()
+        public void Test_Product_Select_Not_Enough_Money_Product_Value_1_First_Check()
         {
             MessageService _messageService = new MessageService();
             VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
@@ -128,8 +128,67 @@ namespace Tests.ServiceTests
             Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
             Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
 
-            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
             Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
+
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("PRICE: 1.00", returnedDisplay);
+        }
+
+        [Test]
+        public void Test_Product_Select_Not_Enough_Money_Product_Value_Subsequent_Check()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("PRICE: 0.50", returnedDisplay);
+        }
+
+
+        [Test]
+        public void Test_Product_Select_Add_4_Quarters()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("PRICE: 1.00", returnedDisplay);
+        }
+
+        [Test]
+        public void Test_Product_Select_Exact_Money_Product_Value_1()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
 
             var returnedDisplay = vendingMachineService.CheckDisplay();
 
