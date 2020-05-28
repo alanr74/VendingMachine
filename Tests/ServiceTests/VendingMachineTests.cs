@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebApplication11;
-using WebApplication11.Controllers;
 using WebApplication11.Models;
 
 namespace ClassLibrary1.ServiceTests
