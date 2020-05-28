@@ -22,9 +22,9 @@ namespace Tests.ServiceTests
         {
             initialCashBox = new Dictionary<Coin, int>()
             {
-                { new Coin {Weight = 5, Radius = 21}, 10 }, 
-                { new Coin {Weight = 2, Radius = 18}, 12 }, 
-                { new Coin {Weight = 6, Radius = 24}, 13 }, 
+                { new Coin {Weight = 5, Radius = 21}, 0 }, // Nickle
+                { new Coin {Weight = 2, Radius = 18}, 0 }, // Dime
+                { new Coin {Weight = 6, Radius = 24}, 0 }, // Quarter
             };
 
             initialStock = new Dictionary<Product, int>()
@@ -201,7 +201,7 @@ namespace Tests.ServiceTests
 
 
         [Test]
-        public void Test_Product_Select_Exact_Money_Product_Value_1()
+        public void Test_Product_Select_Inserted_To_Much_Product_Value_1()
         {
             MessageService _messageService = new MessageService();
             VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
@@ -210,12 +210,38 @@ namespace Tests.ServiceTests
             Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
             Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
 
+            // 3 Dimes
             Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+
             Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
 
             var returnedDisplay = vendingMachineService.CheckDisplay();
 
-            Assert.AreEqual("PRICE: 1.00", returnedDisplay);
+            Assert.AreEqual("THANK YOU", returnedDisplay);
+        }
+
+        [Test]
+        public void Test_Product_Select_Correct_Change_Only()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            // 3 Dimes
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+
+            // Candy
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(3));
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("EXACT CHANGE ONLY", returnedDisplay);
         }
     }
 }

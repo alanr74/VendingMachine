@@ -93,13 +93,13 @@ namespace VendingApp
             }
 
             // More money in that required. Check change can be given
-            if (CheckChangeCanBeGiven(itemPrice))
+            if (!CheckChangeCanBeGiven(itemPrice))
             {
                 messageService.ChangeVendingMessage("EXACT CHANGE ONLY");
                 return false;
             }
 
-            return false;
+            return true;
         }
 
         private bool CheckChangeCanBeGiven(decimal itemPrice)
