@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication11.Models;
+using VendingApp.Models;
 
-namespace WebApplication11.Controllers
+namespace VendingApp.Controllers
 {
     public class VendingMachineController : Controller
     {

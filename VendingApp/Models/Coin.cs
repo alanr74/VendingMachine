@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace WebApplication11.Models
+namespace VendingApp.Models
 {
     public struct Coin
     {

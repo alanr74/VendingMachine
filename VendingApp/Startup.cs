@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-namespace WebApplication11
+namespace VendingApp
 {
     public class Startup
     {

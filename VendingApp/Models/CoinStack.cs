@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace WebApplication11.Models
+namespace VendingApp.Models
 {
     public class CoinStack
     {

@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
-using WebApplication11;
-using WebApplication11.Controllers;
-using WebApplication11.Models;
+using VendingApp;
+using VendingApp.Controllers;
+using VendingApp.Models;
 
 namespace Nunit.Model.Cointest
 {

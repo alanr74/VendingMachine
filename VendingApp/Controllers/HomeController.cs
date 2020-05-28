@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebApplication11.Models;
+using VendingApp.Models;
 
-namespace WebApplication11.Controllers
+namespace VendingApp.Controllers
 {
     public class HomeController : Controller
     {

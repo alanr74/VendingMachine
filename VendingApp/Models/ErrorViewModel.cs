@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApplication11.Models
+namespace VendingApp.Models
 {
     public class ErrorViewModel
     {

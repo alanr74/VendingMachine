@@ -5,8 +5,8 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebApplication11;
-using WebApplication11.Models;
+using VendingApp;
+using VendingApp.Models;
 
 namespace ClassLibrary1.ServiceTests
 {
