@@ -54,7 +54,8 @@ namespace VendingApp
 
             if (stockedItem == null || stockedItem.FirstOrDefault().Value < 1)
             {
-                // No Item in stock (not in spec)
+                messageService.ChangeVendingMessage("SOLD OUT");
+                return true;
             }
 
             var itemPrice = stockedItem.FirstOrDefault().Key.Price;

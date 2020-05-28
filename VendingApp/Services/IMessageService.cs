@@ -29,6 +29,7 @@ namespace VendingApp
 
             switch (messageToreturn)
                 {
+                case "SOLD OUT":
                 case "THANK YOU":
                     currentMessage = defaultMessage;
                     break;
