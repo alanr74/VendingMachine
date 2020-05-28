@@ -218,6 +218,7 @@ namespace Tests.ServiceTests
             Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
 
             var returnedDisplay = vendingMachineService.CheckDisplay();
+            var returnedChange = vendingMachineService.ReturnCoins();
 
             Assert.AreEqual("THANK YOU", returnedDisplay);
         }
@@ -267,6 +268,29 @@ namespace Tests.ServiceTests
         }
 
         [Test]
+        public void Test_Product_REeturned_Change_After_Purchase()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            // 3 Dimes
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+            Assert.DoesNotThrow(() => vendingMachineService.AcceptCoin(new Coin { Weight = 5, Radius = 21 }));
+
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+            var returnedChange = vendingMachineService.ReturnCoins();
+
+            Assert.AreEqual("THANK YOU", returnedDisplay);
+        }
+
+        [Test]
         public void Test_Product_Sold_Out_Check_Display_Second_Time()
         {
             MessageService _messageService = new MessageService();
@@ -288,5 +312,7 @@ namespace Tests.ServiceTests
 
             Assert.AreEqual("INSERT COIN", returnedDisplay);
         }
+
+
     }
 }

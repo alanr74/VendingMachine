@@ -58,6 +58,7 @@ namespace VendingApp
                 return true;
             }
 
+
             var itemPrice = stockedItem.FirstOrDefault().Key.Price;
 
             if (CanProductBePurchased(itemPrice))
@@ -66,7 +67,10 @@ namespace VendingApp
                 messageService.ChangeVendingMessage("THANK YOU");
                 return true;
             }
-            // Item in stock and we have the money.
+            else
+            {
+                coinReturn.RemoveAllCoins();
+            }
 
             return true;
         }
@@ -105,6 +109,7 @@ namespace VendingApp
 
         private bool CheckChangeCanBeGiven(decimal itemPrice)
         {
+
             var combinedResources = new CoinStack();
 
             combinedResources.AddCoinsToStack(currentCoins.GetAllCoins());
@@ -118,6 +123,7 @@ namespace VendingApp
                 {
                     itemPrice -= coinType.Key.CoinWorth;
                     coinsAvailable -= 1;
+                    coinReturn.AddCoinsToStack(coinType.Key);
                 }
             }
 
@@ -131,7 +137,8 @@ namespace VendingApp
 
         public Dictionary<Coin, int> ReturnCoins()
         {
-            var returnedCoins = currentCoins.RemoveAllCoins();
+            coinReturn.AddCoinsToStack(currentCoins.RemoveAllCoins());
+            var returnedCoins = coinReturn.RemoveAllCoins();
             messageService.ResetVendingMessage();
             return returnedCoins;
         }
