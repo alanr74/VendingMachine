@@ -8,7 +8,7 @@ using System.Linq;
 using VendingApp;
 using VendingApp.Models;
 
-namespace ClassLibrary1.ServiceTests
+namespace Tests.ServiceTests
 {
 
     [TestFixture]
@@ -85,6 +85,37 @@ namespace ClassLibrary1.ServiceTests
             var returnedStack = vendingMachineService.ReturnCoins();
 
             Assert.AreEqual((new Coin { Weight = first, Radius = second }), returnedStack.FirstOrDefault().Key);
+        }
+
+        [Test]
+        public void Test_Display_When_Empty()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("INSERT COIN", returnedDisplay);
+        }
+
+        [Test]
+        public void Test_Product_Select()
+        {
+            MessageService _messageService = new MessageService();
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService);
+
+            // Setup Vending Defaults
+            Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
+            Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));
+
+            Assert.DoesNotThrow(() => vendingMachineService.SelectProduct(1));
+            var returnedDisplay = vendingMachineService.CheckDisplay();
+
+            Assert.AreEqual("INSERT COIN", returnedDisplay);
         }
     }
 }
