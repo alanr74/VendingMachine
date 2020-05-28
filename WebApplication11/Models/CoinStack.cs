@@ -47,7 +47,11 @@ namespace WebApplication11.Models
 
         public bool RemoveCoinsFromStack(Dictionary<Coin, int> Coins)
         {
-            return true;
+            foreach (var coin in Coins)
+            {
+                RemoveCoinsFromStack(coin.Key, coin.Value);
+            }
+                return true;
         }
 
         public bool RemoveCoinsFromStack(Coin Coin)
@@ -62,6 +66,20 @@ namespace WebApplication11.Models
                 }
             }
 
+            return false;
+        }
+
+        public bool RemoveCoinsFromStack(Coin Coin, int quatity)
+        {
+            if (CoinsInStack.TryGetValue(Coin, out int numberInStack))
+            {
+                numberInStack -= quatity;
+                if (numberInStack >= 0)
+                {
+                    CoinsInStack[Coin] = numberInStack;
+                    return true;
+                }
+            }
             return false;
         }
 

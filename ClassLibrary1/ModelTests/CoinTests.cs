@@ -6,7 +6,6 @@ using System;
 using WebApplication11;
 using WebApplication11.Controllers;
 using WebApplication11.Models;
-using WebApplication11.Repositories;
 
 namespace Nunit.Model.Cointest
 {

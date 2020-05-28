@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using WebApplication11;
 using WebApplication11.Controllers;
 using WebApplication11.Models;
-using WebApplication11.Repositories;
 
 namespace ClassLibrary1.ServiceTests
 {
@@ -40,8 +39,7 @@ namespace ClassLibrary1.ServiceTests
         public void Test_Vending_Machine_Cash_Setup()
         {
             Mock<IMessageService> _messageService = new Mock<IMessageService>();
-            Mock<IVendingMachineRepository> _vendingMachineRepository = new Mock<IVendingMachineRepository>();
-            VendingMachineService vendingMachineService = new VendingMachineService(_messageService.Object, _vendingMachineRepository.Object);
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService.Object);
 
 
             Assert.DoesNotThrow(() => vendingMachineService.SetupCashbox(initialCashBox));
@@ -51,8 +49,7 @@ namespace ClassLibrary1.ServiceTests
         public void Test_Vending_Machine_Stock_Setup()
         {
             Mock<IMessageService> _messageService = new Mock<IMessageService>();
-            Mock<IVendingMachineRepository> _vendingMachineRepository = new Mock<IVendingMachineRepository>();
-            VendingMachineService vendingMachineService = new VendingMachineService(_messageService.Object, _vendingMachineRepository.Object);
+            VendingMachineService vendingMachineService = new VendingMachineService(_messageService.Object);
 
 
             Assert.DoesNotThrow(() => vendingMachineService.SetupStock(initialStock));

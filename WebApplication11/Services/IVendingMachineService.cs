@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication11.Models;
-using WebApplication11.Repositories;
+
 
 namespace WebApplication11
 {
@@ -23,7 +23,7 @@ namespace WebApplication11
     public class VendingMachineService : IVendingMachineService
     {
         private readonly IMessageService messageService;
-        private readonly IVendingMachineRepository vendingMachineRepository;
+
 
         // Temp var used instead of SQL to hold initial starting coins
         private CoinStack cashBox = new CoinStack();
@@ -31,10 +31,9 @@ namespace WebApplication11
         private CoinStack currentCoins = new CoinStack();
         private CoinStack coinReturn = new CoinStack();
 
-        public VendingMachineService(IMessageService messageService, IVendingMachineRepository vendingMachineRepository)
+        public VendingMachineService(IMessageService messageService )
         {
             this.messageService = messageService;
-            this.vendingMachineRepository = vendingMachineRepository;
         }
 
         public bool AcceptCoin(Coin InsertedCoin)
@@ -67,7 +66,6 @@ namespace WebApplication11
                 return true;
             }
             // Item in stock and we have the money.
-
 
             return true;
         }
