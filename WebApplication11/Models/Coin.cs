@@ -37,30 +37,16 @@ namespace WebApplication11.Models
         public Coin(int Weight, int Radius) =>
             (this.Weight, this.Radius) = (Weight, Radius);
 
-        //public static bool operator ==(Coin left, Coin right) =>
-        //    (left.Weight, left.Radius) == (right.Weight, right.Radius);
-
-        //public static bool operator !=(Coin left, Coin right) =>
-        //    (left.Weight, left.Radius) != (right.Weight, right.Radius);
-
-        //public override int GetHashCode() => Weight.GetHashCode() ^ Radius.GetHashCode();
-
-        //public override bool Equals(object? obj) =>
-        //    (obj is Coin otherCoin)
-        //    ? this == otherCoin
-        //    : false;
-
         public (string, decimal) Type
         {
             get
             {
                 return (Weight, Radius) switch
                 {
-                    (5, 21) => ("Nickel", 5),
-                    (2, 18) => ("Dime", 10),
-                    (6, 24) => ("Quarter", 25),
-                    (3, 19) => ("Pennie", 1),
-                    (_, _) => ("Invalid", 0)
+                    (5, 21) => ("Nickel", 0.5m),
+                    (2, 18) => ("Dime", 0.10m),
+                    (6, 24) => ("Quarter", 0.25m),
+                    (_, _) => ("Invalid", 0.0m)
                 };
             }
         }

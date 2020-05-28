@@ -14,7 +14,6 @@ namespace Nunit.Model.Cointest
     public class CoinTests
     {
         [TestCase(5, 21, "Nickel")]
-        [TestCase(3, 19, "Pennie")]
         [TestCase(6, 24, "Quarter")]
         [TestCase(2, 18, "Dime")]
         [TestCase(3, 1, "Invalid")]

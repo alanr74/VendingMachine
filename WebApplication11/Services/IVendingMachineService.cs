@@ -40,7 +40,7 @@ namespace WebApplication11
         public bool AcceptCoin(Coin InsertedCoin)
         {
             // Return Invalid Coin
-            if(!InsertedCoin.IsValid)
+            if (!InsertedCoin.IsValid)
             {
                 coinReturn.AddCoinsToStack(InsertedCoin);
             }
@@ -53,16 +53,54 @@ namespace WebApplication11
         {
             var stockedItem = stockItems.GetItemInformation(position);
 
-            if(stockedItem == null || stockedItem.FirstOrDefault().Value < 1)
+            if (stockedItem == null || stockedItem.FirstOrDefault().Value < 1)
             {
                 // No Item in stock (not in spec)
             }
 
-            if(currentCoins.StackValue() >= stockedItem.FirstOrDefault().Key.Price)
+            var itemPrice = stockedItem.FirstOrDefault().Key.Price;
+
+            if (currentCoins.StackValue() >= itemPrice)
             {
-                
+                if (CanProductBePurchased(itemPrice))
+                    cashBox.AddCoinsToStack(currentCoins.RemoveAllCoins());
+                messageService.ChangeVendingMessage("THANK YOU");
+                return true;
+                // Item in stock and we have the money.
             }
+
             return true;
+        }
+
+        private bool CanProductBePurchased(decimal itemPrice)
+        {
+            // Exact Change was used
+            if (currentCoins.StackValue() == itemPrice)
+            {
+                return true;
+            }
+
+            // Not enough Money in
+            if (currentCoins.StackValue() < itemPrice)
+            {
+                messageService.ChangeVendingMessage($"PRICE: {itemPrice} ");
+                return false;
+            }
+
+            // More money in that required. Check change can be given
+            if (CheckChangeCanBeGiven(itemPrice))
+            {
+                messageService.ChangeVendingMessage("EXACT CHANGE ONLY");
+                return false;
+            }
+
+            return false;
+        }
+
+        private bool CheckChangeCanBeGiven(decimal itemPrice)
+        {
+
+            return false;
         }
 
         public bool MakeChange()
@@ -78,7 +116,7 @@ namespace WebApplication11
 
         public string CheckDisplay()
         {
-            return "";
+            return messageService.CurrentMessage();
         }
 
         public bool SetupCashbox(Dictionary<Coin, int> coins)

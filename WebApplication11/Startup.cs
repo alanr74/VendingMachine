@@ -28,7 +28,6 @@ namespace WebApplication11
 
             // My Repos
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IVendingMachineService, VendingMachineService>();
 
         }
