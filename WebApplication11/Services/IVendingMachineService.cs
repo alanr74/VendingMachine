@@ -111,6 +111,7 @@ namespace WebApplication11
         public Dictionary<Coin, int> ReturnCoins()
         {
             var returnedCoins = currentCoins.RemoveAllCoins();
+            messageService.ResetVendingMessage();
             return returnedCoins;
         }
 

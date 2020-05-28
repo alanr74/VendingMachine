@@ -10,13 +10,14 @@ namespace WebApplication11
     public interface IMessageService
     {
         bool ChangeVendingMessage(string Message);
-
         string CurrentMessage();
+        void ResetVendingMessage();
     }
 
     public class MessageService : IMessageService
     {
-        private string message = "INSERT COIN";
+        private const string defaultMessage = "INSERT COIN";
+        private string currentMessage = defaultMessage;
         public bool ChangeVendingMessage(string Message)
         {
             return true;
@@ -24,16 +25,21 @@ namespace WebApplication11
 
         public string CurrentMessage()
         {
-            var messageToreturn = message;
+            var messageToreturn = currentMessage;
 
             switch (messageToreturn)
                 {
-                case "THANK YOU":
-                    message = "INSERT COIN";
+                case defaultMessage:
+                    currentMessage = defaultMessage;
                     break;
             }
 
             return messageToreturn;
+        }
+
+        public void ResetVendingMessage()
+        {
+            currentMessage = defaultMessage;
         }
     }
 }
