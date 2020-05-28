@@ -81,5 +81,11 @@ namespace WebApplication11.Models
             }
             return total;
         }
+
+        public Dictionary<Coin, int> GetAllCoins()
+        {
+            Dictionary<Coin, int> returnedCoins = new Dictionary<Coin, int>(CoinsInStack);
+            return returnedCoins;
+        }
     }
 }

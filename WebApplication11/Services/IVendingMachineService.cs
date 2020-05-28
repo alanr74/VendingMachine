@@ -60,14 +60,14 @@ namespace WebApplication11
 
             var itemPrice = stockedItem.FirstOrDefault().Key.Price;
 
-            if (currentCoins.StackValue() >= itemPrice)
+            if (CanProductBePurchased(itemPrice))
             {
-                if (CanProductBePurchased(itemPrice))
-                    cashBox.AddCoinsToStack(currentCoins.RemoveAllCoins());
+                cashBox.AddCoinsToStack(currentCoins.RemoveAllCoins());
                 messageService.ChangeVendingMessage("THANK YOU");
                 return true;
-                // Item in stock and we have the money.
             }
+            // Item in stock and we have the money.
+
 
             return true;
         }
@@ -99,8 +99,23 @@ namespace WebApplication11
 
         private bool CheckChangeCanBeGiven(decimal itemPrice)
         {
+            var combinedResources = new CoinStack();
 
-            return false;
+            combinedResources.AddCoinsToStack(currentCoins.GetAllCoins());
+            combinedResources.AddCoinsToStack(cashBox.GetAllCoins());
+
+            var ordered = combinedResources.GetAllCoins().OrderBy(x => x.Key.CoinWorth);
+            foreach(var coinType in ordered)
+            {
+                var coinsAvailable = coinType.Value;
+                while (itemPrice >= coinType.Key.CoinWorth && coinsAvailable > 0)
+                {
+                    itemPrice -= coinType.Key.CoinWorth;
+                    coinsAvailable -= 1;
+                }
+            }
+
+            return itemPrice == 0 ? true : false;
         }
 
         public bool MakeChange()
